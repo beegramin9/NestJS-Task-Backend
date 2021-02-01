@@ -8,7 +8,8 @@ import { TaskStatus } from "../entity/task-status.enum";
 Service에서도 DB와의 interaction을 할 수는 있지만, 역할분담을
 확실히 하기 위해서 따로 떼어놓음 */
 
-/* Dependency Injection으로 Task Module에 inject할 것 */
+/* @EntityRepository(인터랙션할 Table 이름)
+Dependency Injection으로 Task Module에 inject할 것 */
 @EntityRepository(Task)
 export class TaskRepository extends Repository<Task> {
     async getTasks(filterDto: GetTaskFilterDto): Promise<Task[]> {
