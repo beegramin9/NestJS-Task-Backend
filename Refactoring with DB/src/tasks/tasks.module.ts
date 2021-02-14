@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from 'src/auth/auth.module';
 import { TaskRepository } from './repository/task.repository';
 import { TasksController } from './tasks.controller';
 import { TasksService } from './tasks.service';
@@ -11,11 +12,14 @@ import { TasksService } from './tasks.service';
     forFeature로 부른다.
     [] 안에는 이 모델 시스템에 포함하고 싶은
     entity나 repos을 넣는다. */
-    TypeOrmModule.forFeature([TaskRepository])
+    TypeOrmModule.forFeature([TaskRepository]),
+    /* AuthModule이 export 하는 모든 것은 TaskModule에서 available */
+    AuthModule
   ],
   controllers: [TasksController],
   providers: [TasksService]
   /* provider에 TaskService가 Dependency Inject로 Inject가 되었으므로
-  이제 같은 Task 모듈에 있는 Task Controller에 Provide 가능 */
+  같은 TaskModule 내에서 언제든지 불러서 사용 가능
+  이때는 @inject 없이 그냥 constructor 안에 불러오기만 하면 됨 */
 })
 export class TasksModule {}
